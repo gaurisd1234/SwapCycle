@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Sign up - SwapCycle{% endblock title %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height:70vh;">
+    <div class="card shadow-sm w-100" style="max-width:640px;">
+        <div class="row g-0">
+            <div class="col-md-6 d-none d-md-block" style="background: linear-gradient(135deg,#3b82f6 0%,#06b6d4 100%); color:white;">
+                <div class="p-4 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                    <h3 class="fw-bold">Join SwapCycle</h3>
+                    <p class="small">Buy, sell, and swap with students on campus — fast and free.</p>
+                    <i class="fas fa-exchange-alt fa-3x mt-2"></i>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-3 text-center">Create your account</h4>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="submit" class="btn btn-success btn-lg">Create account</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <span class="small text-muted">Already have an account?</span>
+                        <a class="ms-1" href="{% url 'account_login' %}">Sign in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

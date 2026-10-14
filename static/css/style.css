@@ -1,0 +1,23 @@
+/* Custom styles */
+.message-content {
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.nav-item .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}

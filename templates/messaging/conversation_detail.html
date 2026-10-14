@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        {% for participant in conversation.participants.all %}
+            {% if participant != user %}
+                <h3>Conversation with {{ participant.username }}</h3>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="card-body">
+        <div class="messages-container" style="max-height: 400px; overflow-y: auto;">
+            {% for message in conversation.messages.all %}
+                <div class="message {% if message.sender == user %}text-end{% endif %} mb-3">
+                    <div class="message-content {% if message.sender == user %}bg-primary text-white{% else %}bg-light{% endif %} d-inline-block p-2 rounded">
+                        {{ message.content }}
+                    </div>
+                    <small class="text-muted d-block">
+                        {{ message.created_at|timesince }} ago
+                        {% if message.is_read and message.sender == user %}
+                            <i class="fas fa-check-double"></i>
+                        {% endif %}
+                    </small>
+                </div>
+            {% empty %}
+                <p class="text-center">No messages yet.</p>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="{% url 'messaging:message-create' conversation.pk %}" class="mt-3">
+            {% csrf_token %}
+            {{ message_form|crispy }}
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Scroll to bottom of messages container
+    document.addEventListener('DOMContentLoaded', function() {
+        const messagesContainer = document.querySelector('.messages-container');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    });
+</script>
+{% endblock extra_js %}
